@@ -142,5 +142,6 @@ async function testUrl(url) {
     i++;
     bar.update(i);
   }
-  bar.stop();
+  //bar.stop();
+  process.exit(0);
 })();
