@@ -17,5 +17,11 @@ Install dependency:
 ## Usage
 ```bash
 > node [progName] [filename.txt]
+
+in you txt file each line must be only [exemple : bybit.com
+                                                  binance.com
+                                                  laboutique.com
+                                                  ]
+no url preffix needed like "https://"                                                  
 ```
     
