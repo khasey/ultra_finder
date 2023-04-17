@@ -11,13 +11,13 @@ const filename = process.argv[2];
 const options = { timeout: 2000 };
 const urls = fs.readFileSync(filename, 'utf-8').split('\n');
 
-const header = "|                   _   _ _  _____ ___    ___                    |\n"+
-               "|                  | | | | ||_   _| _ )  / _ |                   |\n"+
-               "|                  | |_| | |__| | |   / / _| |                   |\n"+
-               "|                  |____/|____|_| |_|_)/_/ |_|                   | \n"+
-               "------------------------------------------------------------------ \n"+
-               "--------------------- / THE ULTRA FINDER / ----------------------- \n"+
-               "------------------------------------------------------------------ ";           
+const header = "|**********************************************|\n"+
+               "|*********| | | | ||_   _| _ )  / _ |**********|\n"+
+               "|*********| |_| | |__| | |   / / _| |**********|\n"+
+               "|*********|____/|____|_| |_|_)/_/ |_|**********| \n"+
+               "------------------------------------------------ \n"+
+               "------------ / THE ULTRA FINDER / -------------- \n"+
+               "------------------------------------------------ ";           
 
 
 console.log(Green + header + Reset);
@@ -80,8 +80,8 @@ async function testUrl(url) {
       });
 
       resp.on('end', () => {
-        if (env.codePointAt === 200) {
-          console.log(Green + `${url} ---- / FIND ENV / ----` + Reset);
+        if (resp.statusCode === 200 && env.includes('DB_PASSWORD') || env.includes('password')) {
+          console.log( '\n' + Red + `${url} ---- / FIND ENV / ----` + Reset);
         } else {
           //console.log(Red + `${url} ---- / NOTHING / ----` + Reset);
         }
@@ -112,6 +112,10 @@ async function testUrl(url) {
       res.on('end', () => {
         if (data.includes('firebase-init.js') || data.includes('firebase.js') || data.includes('firebaseConfig')) {
           console.log('\n' + PURPLE + `${url} ---- / FIND FIREBASE / ----` + Reset); 
+        if (data.includes('Alma') || data.includes('addEventAlma') || data.includes('alma'))
+          console.log( '\n' + Red + `${url} ---- / FIND ALMA / ----` + Reset); 
+          if (data.includes('PayPlug') || data.includes('addEventPayPlug') || data.includes('payplug'))
+          console.log( '\n' + Red + `${url} ---- / FIND PAYPLUG / ----` + Reset);   
         } else {
           //console.log(Red + `${url} ---- / NOTHING / ----` + Reset);
         }
@@ -142,6 +146,6 @@ async function testUrl(url) {
     i++;
     bar.update(i);
   }
-  //bar.stop();
+  // bar.stop();
   process.exit(0);
 })();
